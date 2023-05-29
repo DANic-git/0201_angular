@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN npm install
+RUN npm ci
 
 FROM node:18-buster-slim as lint
 WORKDIR /app
@@ -29,7 +29,7 @@ RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key
     ${CHROME_VERSION:-google-chrome-stable} \
   && rm /etc/apt/sources.list.d/google-chrome.list \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
-RUN ./node_modules/.bin/ng test --browsers ChromeHeadlessNoSandbox
+RUN npm test -- --browsers ChromeHeadlessNoSandbox
 
 
 FROM node:18-buster-slim as build
